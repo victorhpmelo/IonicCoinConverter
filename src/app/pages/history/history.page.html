@@ -1,10 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Histórico</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-button expand="block" color="danger" (click)="clearHistory()" *ngIf="history.length > 0" class="mb-16">
+    Limpar Histórico
+  </ion-button>
+
   <ion-list *ngIf="history.length > 0; else empty">
     <ion-item *ngFor="let item of history">
       <ion-label>
@@ -17,7 +21,4 @@
   <ng-template #empty>
     <p>Nenhuma conversão registrada.</p>
   </ng-template>
-  <ion-button expand="block" color="danger" (click)="clearHistory()" *ngIf="history.length > 0">
-    Limpar Histórico
-  </ion-button>
 </ion-content>

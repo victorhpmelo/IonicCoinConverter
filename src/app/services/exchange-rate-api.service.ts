@@ -44,6 +44,10 @@ export class ExchangeRateAPIService {
         error: 'Sem conexão e sem taxa salva para esta moeda.'
       });
     }
-    return this.http.get(`${this.apiUrl}/pair/${baseCurrency}/${targetCurrency}/${amount}`);
+    return this.http.get(`${this.apiUrl}/pair/${baseCurrency}/${targetCurrency}/${amount}`).pipe(
+      tap(() => {
+        this.getExchangeRates(baseCurrency).subscribe();
+      })
+    );
   }
 }

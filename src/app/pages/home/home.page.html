@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
+  <ion-item class="currency-input-item">
     <ion-label>Moeda de Origem</ion-label>
     <ion-select [(ngModel)]="fromCurrency">
       <ion-select-option *ngFor="let currency of currencies" [value]="currency">
@@ -14,7 +14,7 @@
     </ion-select>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="currency-input-item">
     <ion-label>Moeda de Destino</ion-label>
     <ion-select [(ngModel)]="toCurrency">
       <ion-select-option *ngFor="let currency of currencies" [value]="currency">
@@ -23,17 +23,21 @@
     </ion-select>
   </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Valor</ion-label>
-    <ion-input type="number" [(ngModel)]="amount"></ion-input>
+  <ion-item class="value-input-item">
+    <ion-label position="stacked">Valor</ion-label>
+    <ion-input type="number" [(ngModel)]="amount" placeholder="Digite o valor"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" (click)="convertCurrency()" class="centered-btn button-wide">
+  <ion-button expand="block" class="button-convert" (click)="convertCurrency()">
     Converter
   </ion-button>
 
-  <ion-button expand="block" fill="clear" color="medium" (click)="swapCurrencies()" class="centered-btn-secondary button-wide">
+  <ion-button expand="block" fill="clear" color="medium" class="button-swap" (click)="swapCurrencies()">
     Inverter Moedas
+  </ion-button>
+
+  <ion-button expand="block" class="button-history" [routerLink]="['/tabs/history']">
+    Ver Histórico
   </ion-button>
 
   <ion-card *ngIf="convertedAmount !== null">
@@ -44,8 +48,4 @@
       {{ amount }} {{ fromCurrency }} = {{ convertedAmount | number:'1.2-2' }} {{ toCurrency }}
     </ion-card-content>
   </ion-card>
-
-  <ion-button expand="block" color="secondary" [routerLink]="['/tabs/history']" class="centered-btn-secondary button-wide">
-    Ver Histórico
-  </ion-button>
 </ion-content>

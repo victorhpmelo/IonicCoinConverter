@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeRateAPIService } from '../../services/exchange-rate-api.service';
 import { ConversionHistoryService } from '../../services/conversion-history.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +15,13 @@ export class HomePage {
   currencies: string[] = []; 
   fromCurrency: string = 'BRL'; 
   toCurrency: string = 'USD'; 
-  amount: number = 0; 
+  amount: number | null = null; 
   convertedAmount: number | null = null; 
 
   constructor(
     private exchangeRateService: ExchangeRateAPIService,
-    private historyService: ConversionHistoryService
+    private historyService: ConversionHistoryService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -36,8 +38,31 @@ export class HomePage {
     });
   }
 
-  convertCurrency() {
+  async showErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Erro',
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async convertCurrency() {
+    if (this.amount === null || this.amount === undefined || this.amount <= 0) {
+      const alert = await this.alertController.create({
+        header: 'Valor inválido',
+        message: 'O valor para conversão deve ser maior que zero.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
     this.exchangeRateService.convertCurrency(this.fromCurrency, this.toCurrency, this.amount).subscribe((data) => {
+      if (data.error) {
+        this.showErrorAlert(data.error);
+        return;
+      }
       this.convertedAmount = data.conversion_result;
       this.historyService.addConversion({
         from: this.fromCurrency,

@@ -9,7 +9,7 @@ export class ConversionHistoryService {
   addConversion(conversion: any) {
     const history = this.getHistory();
     history.unshift(conversion);
-    localStorage.setItem(this.key, JSON.stringify(history.slice(0, 20))); // Limita a 20 itens
+    localStorage.setItem(this.key, JSON.stringify(history.slice(0, 20))); 
   }
 
   getHistory(): any[] {
