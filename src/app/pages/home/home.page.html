@@ -28,11 +28,11 @@
     <ion-input type="number" [(ngModel)]="amount"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" (click)="convertCurrency()">
+  <ion-button expand="block" (click)="convertCurrency()" class="centered-btn button-wide">
     Converter
   </ion-button>
 
-  <ion-button expand="block" fill="clear" color="medium" (click)="swapCurrencies()">
+  <ion-button expand="block" fill="clear" color="medium" (click)="swapCurrencies()" class="centered-btn-secondary button-wide">
     Inverter Moedas
   </ion-button>
 
@@ -44,4 +44,8 @@
       {{ amount }} {{ fromCurrency }} = {{ convertedAmount | number:'1.2-2' }} {{ toCurrency }}
     </ion-card-content>
   </ion-card>
+
+  <ion-button expand="block" color="secondary" [routerLink]="['/tabs/history']" class="centered-btn-secondary button-wide">
+    Ver Histórico
+  </ion-button>
 </ion-content>
